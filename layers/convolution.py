@@ -50,8 +50,8 @@ class ConvLayer:
 
             im_dim = img[:, :, z]
 
-            for y in np.arange(0, h+padH - h % kW, self.config['stride']):
-                for x in np.arange(0, w+padW - w % kH, self.config['stride']):
+            for y in np.arange(0, h+padH - (h % kW) - 1, self.config['stride']):
+                for x in np.arange(0, w+padW - (w % kH) - 1, self.config['stride']):
 
                     #print("Kernel: {} x {}".format(kH, kW))
 
@@ -82,5 +82,11 @@ class Kernels(Enum):
     EDGES = Kernel(
         np.array(([-1, -1, -1], [-1, 8, -1], [-1, -1, -1]), dtype="int"))
 
+    SHARP = Kernel(
+        np.array(([0, -1, 0], [-1, 5, -1], [0, -1, 0]), dtype="int"))
+
     RELIEF = Kernel(
         np.array(([-2, -1, 0], [-1, 1, 1], [0, 1, 2]), dtype="int"))
+
+    SOBEL_H = Kernel(
+        np.array(([1, 2, 1], [0, 0, 0], [-1, -2, -1]), dtype="int"))

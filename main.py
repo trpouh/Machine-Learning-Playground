@@ -8,13 +8,16 @@ import cv2
 
 if __name__ == "__main__":
 
+    (w, h) = (250, 250)
+
+    img = cv2.imread("IMG_0558.JPG", 1)
+    #img = cv2.imread("bbenson.jpg", 1)
+    img = cv2.resize(img, (w, h))
+
+    conv = ConvLayer(input_dimension=(w, h, 1),
+                     kernel=Kernels.SHARP, activation=Activations.ReLu)
+
     start = time.time()
-
-    img = cv2.imread("IMG_0558.JPG", 3)
-    img = cv2.resize(img, (500, 500))
-
-    conv = ConvLayer(input_dimension=(500, 500, 3),
-                     kernel=Kernels.EDGES, activation=Activations.ReLu)
 
     out = conv.fire(img)
 
